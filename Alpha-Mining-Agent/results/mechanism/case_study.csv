@@ -1,0 +1,30 @@
+case,round,formula,follows,status,message,depth,train_absicir,train_turnover,fitness,valid_absicir,valid_turnover,valid_same_sign
+R1,3,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low), 20) / (ts_std(returns, 20) + 0.001), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,4,"ts_decay_linear((high - max(open, close)) / (high - low) / (ts_std(returns, 20) + 0.001), 5)",True,ok,,6,0.002966098969724969,0.5933983796984192,-0.006373739000116955,0.039209699092845135,0.5997389738973897,True
+R1,5,"ts_mean((high - max(open, close)) / (high - low + 0.001), 10)",False,ok,,5,0.08348123930311037,0.5319710301389013,0.08028413628922024,0.0053726554447682765,0.5401305130513051,False
+R1,6,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low + 0.001), 10), 10)",False,ok,,6,0.10422213769989751,0.4198367326907679,0.10422213769989751,0.06055932136919206,0.4265756575657567,False
+R1,6,"ts_decay_linear(ts_mean((min(open, close) - low) / (high - low + 0.001) - (high - max(open, close)) / (high - low + 0.001), 10), 5)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,8,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low + 0.001) * ts_rank(volume, 20), 10), 5)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,9,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low) / (ts_std(returns, 20) + 0.001), 10), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,10,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low) / (ts_std(returns, 20) + 0.001), 10), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,11,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low + 0.001), 10) / (ts_std(returns, 20) + 0.01), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,12,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low), 30), 10)",False,ok,,6,0.11108239954639786,0.21341828949106445,0.11108239954639786,0.15427723125026158,0.22279477947794776,False
+R1,13,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low), 20), 5) / (0.01 + ts_std(returns, 20))",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,14,"ts_decay_linear(ts_mean((close - low) / (high - low) - (high - max(open, close)) / (high - low), 10), 5)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,15,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low) / ts_std(returns, 20), 10), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,16,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low) * (ts_rank(volume, 20) - 0.5), 20), 5)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,16,"ts_decay_linear(ts_mean((min(open, close) - low) / (high - low) - (high - max(open, close)) / (high - low), 10), 5)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,17,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low), 10) / (1 + ts_std(returns, 20)), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,18,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low), 20) / (1 + ts_std(returns, 20)), 5)",True,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R1,19,"ts_decay_linear(ts_mean((high - max(open, close)) / (high - low) - (min(open, close) - low) / (high - low), 20), 10)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R2,11,"ts_decay_linear(ts_mean(ts_rank(volume, 10) - ts_rank(abs(returns), 10), 20), 10)",True,ok,,6,0.050239846298975536,0.38555560094433655,0.050239846298975536,0.026394743986812616,0.38897039703970404,False
+R2,12,"ts_decay_linear(ts_mean(ts_rank(volume, 10) - ts_rank(abs(returns), 10), 20), 10)",True,duplicate,this formula has already been evaluated,6,,,,,,
+R2,13,"ts_decay_linear(ts_mean(ts_rank(volume, 10) - ts_rank(abs(returns), 10), 10), 10)",True,ok,,6,0.11772857639625763,0.5536560654265947,0.11236296985359816,0.019509535978375715,0.5555695569556957,False
+R2,14,"ts_decay_linear(ts_mean(ts_rank(volume, 20) - ts_rank(abs(returns), 20), 20), 10)",True,ok,,6,0.0382859036291993,0.3442988365278,0.0382859036291993,0.09661380621447511,0.3454595459545955,False
+R2,15,"ts_decay_linear(ts_mean(ts_rank(volume, 20) - ts_rank(abs(returns), 20), 20), 10)",True,duplicate,this formula has already been evaluated,6,,,,,,
+R2,17,"ts_decay_linear(ts_rank(volume, 20) - ts_rank(abs(returns), 20), 10)",False,ok,,5,0.10556286457867403,0.6074876841451405,0.09481409616415998,0.09541106800955011,0.6031893189318932,True
+R2,18,"ts_mean(ts_rank(volume, 20) - ts_rank(abs(returns), 20), 10)",False,ok,,5,0.10631571659354126,0.5407577620625,0.10223994038729126,0.028856731943041145,0.5369166916691669,True
+R2,18,"ts_decay_linear((ts_rank(volume, 20) - ts_rank(abs(returns), 20)) / (1 + ts_std(returns, 20)), 10)",False,ok,,6,0.10453399128894304,0.6073988061644139,0.09379411067250165,0.09484688417414715,0.6033383338333833,True
+R2,19,"ts_decay_linear(ts_mean(ts_rank(volume, 20) - ts_rank(abs(returns), 20), 10) / (1 + ts_std(returns, 20)), 5)",False,invalid,expression depth 7 exceeds the limit of 6,7,,,,,,
+R2,20,"ts_decay_linear(ts_mean(ts_rank(volume, 10) - ts_rank(abs(returns), 10), 10), 10)",True,duplicate,this formula has already been evaluated,6,,,,,,
+R2,20,"ts_decay_linear(ts_mean(ts_rank(volume, 20) - ts_rank(abs(returns), 20), 20), 10)",True,duplicate,this formula has already been evaluated,6,,,,,,

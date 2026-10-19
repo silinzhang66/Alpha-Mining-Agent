@@ -1,0 +1,67 @@
+# Index ticker -> price entity. Entity = yfinance symbol, or ti_<SYMBOL> for Tiingo.
+# Empty entity = no usable data (reused ticker / bad feed).
+# start/end (inclusive) restrict the row to part of the ticker's index history; blank = unbounded.
+# Tickers not listed here or in tiingo_map.csv map to themselves with "." -> "-".
+index_ticker,entity,start,end,note
+ABC,COR,,,AmerisourceBergen renamed Cencora 2023
+ANTM,ELV,,,Anthem renamed Elevance 2022
+BHGE,BKR,,,Baker Hughes GE renamed 2019
+BLL,BALL,,,Ball ticker change 2022
+CTL,LUMN,,,CenturyLink renamed Lumen 2020
+FB,META,,,Facebook renamed Meta 2022
+FBHS,FBIN,,,Fortune Brands ticker change 2022
+FI,FISV,,,Fiserv FI<->FISV ticker changes 2023/2025
+FLT,CPAY,,,FleetCor renamed Corpay 2024
+HCP,DOC,,,HCP -> Healthpeak (PEAK) -> DOC 2024
+PEAK,DOC,,,Healthpeak ticker change 2024
+HFC,DINO,,,HollyFrontier -> HF Sinclair 2022
+HRS,LHX,,,Harris surviving entity of L3Harris 2019
+JEC,J,,,Jacobs ticker change 2019
+KORS,CPRI,,,Michael Kors renamed Capri 2019
+LB,BBWI,,,L Brands renamed Bath & Body Works 2021
+MMC,MRSH,,,Marsh McLennan ticker change 2026
+NLOK,GEN,,,NortonLifeLock renamed Gen Digital 2022
+SYMC,GEN,,,Symantec -> NortonLifeLock -> Gen Digital
+PKI,RVTY,,,PerkinElmer renamed Revvity 2023
+RE,EG,,,Everest Re ticker change 2023
+TMK,GL,,,Torchmark renamed Globe Life 2019
+WLTW,WTW,,,Willis Towers Watson ticker change 2022
+MYL,VTRS,,,Mylan surviving entity of Viatris 2020
+UTX,RTX,,,UTC surviving entity of Raytheon Technologies 2020
+DWDP,DD,,,DowDuPont renamed DuPont 2019
+ARNC,ti_HWM,,,Alcoa Inc -> Arconic (2016) -> Howmet (2020); yfinance HWM starts 2016-11
+HWM,ti_HWM,,,same entity as ARNC; one source keeps the series continuous
+ADS,BFH,,,Alliance Data renamed Bread Financial 2022
+WYND,TNL,,,Wyndham Worldwide -> Wyndham Destinations -> Travel + Leisure
+GPS,GAP,,,Gap ticker change 2024
+IR,TT,,2020-03-02,Ingersoll-Rand plc renamed Trane (TT) 2020
+IR,IR,2020-03-03,,Gardner Denver took the IR ticker 2020
+SE,ti_SE,,,reused ticker; Tiingo keeps the Spectra Energy row (validate)
+TE,,,,reused: current TE is not TECO Energy
+STI,ti_STI,,,reused ticker; Tiingo keeps the SunTrust row (validate)
+EMC,ti_EMC,,,reused ticker; Tiingo keeps the EMC Corp row (validate)
+ADT,ti_ADT,,2016-12-31,old ADT acquired 2016; current ADT relisted 2018 (validate)
+SNDK,ti_SNDK,,2016-12-31,old SanDisk acquired 2016; current SNDK is the 2025 spin-off (validate)
+PARA,,,,no usable feed: yfinance returns placeholder prices; Tiingo PARA is OTC junk from 2021-02 (med $vol ~2e4; 37% zero returns)
+BK,BNY,,,Bank of New York Mellon ticker change 2026
+CBS,ti_VIAC,,,Tiingo keeps CBS Class B history under VIAC up to the 2019-12-05 merger (ends 2019-12-04)
+VIAC,,,,no usable feed for ViacomCBS 2019-12 to 2022-02 (Tiingo VIAC stops at the merger; PARA see above)
+COG,ti_CTRA,,,Cabot Oil & Gas renamed Coterra 2021
+CTRA,ti_CTRA,,,Coterra (delisted 2026)
+CDAY,ti_DAY,,,Ceridian renamed Dayforce 2024
+DISCA,ti_WBD,,,Discovery Class A -> Warner Bros. Discovery 2022
+WBD,ti_WBD,,,Warner Bros. Discovery (delisted 2026)
+DISCK,ti_DISCK,,,Discovery Class C
+DOW,ti_DOW,,2017-08-31,old Dow Chemical; current DOW is the 2019 spin-off (validate)
+ESV,ti_VAL,,,Ensco -> Valaris; Tiingo VAL 1992-2017 row (validate)
+SIVB,ti_SIVBQ,,,SVB Financial failed 2023; Tiingo history under OTC ticker
+SBNY,ti_SBNY,,,Signature Bank failed 2023; Tiingo history under OTC row
+BBBY,ti_BBBYQ,,,Bed Bath & Beyond; Tiingo history under OTC ticker
+ENDP,ti_ENDPQ,,,Endo International; Tiingo history under OTC ticker
+MNK,ti_MNKKQ,,,Mallinckrodt; Tiingo history under OTC ticker
+FRC,,,,First Republic failed 2023; no source found
+EQR,,,,Equity Residential; not on yfinance or Tiingo
+CCE,,,,Coca-Cola Enterprises merged 2016; no source found
+BBT,TFC,,,BB&T surviving entity of Truist 2019; current BBT is Beacon Financial (reused)
+FOXA,ti_TFCFA,,2019-03-18,Twenty-First Century Fox Class A until Fox Corp replaced it (2019-03-19); Tiingo keeps 21CF history under TFCFA
+FOX,ti_TFCF,,2019-03-18,Twenty-First Century Fox Class B until Fox Corp replaced it (2019-03-19); Tiingo keeps 21CF history under TFCF

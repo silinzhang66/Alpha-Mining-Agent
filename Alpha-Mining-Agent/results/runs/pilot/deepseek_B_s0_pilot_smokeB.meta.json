@@ -1,0 +1,50 @@
+{
+  "run": "deepseek_B_s0_pilot_smokeB",
+  "args": {
+    "method": "llm",
+    "seed": 0,
+    "budget": null,
+    "model": "deepseek",
+    "group": "B",
+    "rounds": 1,
+    "thinking": false,
+    "tag": "_pilot_smokeB"
+  },
+  "config": {
+    "_comment": "Pilot-stage values. Calibrate on train/validation only, then freeze (see docs/design_freeze.md).",
+    "lambda": 0.1,
+    "tau": 0.5,
+    "rounds": 20,
+    "k": 10,
+    "temperature": 0.7,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "gp_pop_size": {
+      "200": 10,
+      "1000": 50
+    },
+    "diagnostics": {
+      "r1_up_t": 1.65,
+      "r1_ratio": 0.3333333333,
+      "r2_turnover": 0.6,
+      "r2_autocorr": 0.5,
+      "max_per_round": 3
+    },
+    "pool_rho_max": 0.6,
+    "pool_gate_file": "results/alpha101_gates.json"
+  },
+  "budget": 10,
+  "seconds": 9.7,
+  "pool_size": 6,
+  "status_counts": {
+    "ok": 10,
+    "invalid": 0,
+    "duplicate": 0,
+    "error": 0
+  }
+}

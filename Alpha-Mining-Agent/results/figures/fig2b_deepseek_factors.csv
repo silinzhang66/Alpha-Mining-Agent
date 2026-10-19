@@ -1,0 +1,9 @@
+factor,expr
+F1,"-1 * rank(ts_decay_linear(ts_rank(ret_overnight, 10) - ts_rank(ret_intraday, 10), 5))"
+F2,"-1 * rank(ts_decay_linear(ret_intraday / (dollar_vol + 1), 5))"
+F3,"-rank(ts_mean(ret_intraday, 3))"
+F4,"rank(ts_mean(ts_rank(volume, 10) - ts_rank(abs(returns), 10), 5))"
+F5,"rank(ts_decay_linear(-ret_intraday, 5))"
+F6,"rank(ts_mean((high - max(open, close))/(high - low + 0.0001), 5))"
+F7,"rank(ts_mean(ts_rank(volume,20) - ts_rank(abs(returns),20), 5))"
+F8,"rank(ts_decay_linear((ret_overnight - ret_intraday) * ts_rank(volume, 20), 20))"
