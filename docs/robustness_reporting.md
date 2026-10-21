@@ -1,6 +1,6 @@
 # Pre-specified robustness reporting (2026-10-18)
 
-> English translation of two notes written after the design freeze. Part 1 was written before any formal run, part 2 before the test set was unlocked. **Neither changes the design:** the primary metrics P1 and P2, the pool-entry gates, the fitness and the mining loop follow [design_freeze.md](design_freeze.md). Both only add reporting.
+> Two notes written after the design freeze: part 1 before any formal run, part 2 before the test set was unlocked. **Neither changes the design:** the primary metrics P1 and P2, the pool-entry gates, the fitness and the mining loop follow [design_freeze.md](design_freeze.md). Both only add reporting.
 
 ## Part 1. Discrete vs. continuous factors (written before the formal runs)
 

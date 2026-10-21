@@ -1,6 +1,6 @@
 # Design freeze record (2026-10-17)
 
-> English translation of the record written at the design freeze. In the development repository it was committed together with the frozen code (git tag `design-freeze`). **No part of the design was changed after the freeze.** The test set was unlocked (`UNLOCK_TEST=1`) only after all formal runs had finished, and was evaluated once. All calibration before the freeze used only the training period (2016–2021) and the validation period (2022–2023).
+> Written at the design freeze and committed together with the frozen code. **No part of the design was changed after the freeze.** The test set was unlocked (`UNLOCK_TEST=1`) only after all formal runs had finished, and was evaluated once. All calibration before the freeze used only the training period (2016–2021) and the validation period (2022–2023).
 
 ## 1. Frozen parameters (`configs/experiment.json`)
 

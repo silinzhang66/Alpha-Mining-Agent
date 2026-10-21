@@ -1,6 +1,6 @@
-# Why Rule-Based Diagnostic Feedback Fails in LLM Alpha Mining
+# Does Rule-Based Diagnostic Feedback Help LLM Alpha Mining?
 
-Code, prompts, complete LLM logs and saved results for the paper *Why Rule-Based Diagnostic Feedback Fails in LLM Alpha Mining: A Controlled Evaluation with a Single-Use Test Set*.
+Code, prompts, complete LLM logs and saved results for the paper *Does Rule-Based Diagnostic Feedback Help LLM Alpha Mining? A Controlled Evaluation with a Single-Use Test Set*.
 
 The study runs an LLM factor-mining loop on S&P 500 stocks with three prompt groups:
 
@@ -36,7 +36,8 @@ tests/                   unit tests
 data/                    derived tables and the probe question bank (see "Data")
 results/                 all saved results (see "Results")
 logs/llm/                every LLM request and response
-docs/                    design freeze record, pre-specified robustness reporting, probe results
+docs/                    design freeze record, pre-specified robustness reporting, probe results,
+                         pre-specified post-review experiments
 ```
 
 ## Setup
@@ -95,10 +96,19 @@ Steps in the order they were run. All `uv run python` commands are run from the 
    uv run python scripts/analyze_mechanism.py                           # results/mechanism/mechanism.md
    uv run python scripts/make_case_study.py                             # Table 2
    PYTHONPATH=scripts uv run python scripts/analyze_supplement.py       # results/mechanism/supplement.md
+   uv run python scripts/compute_mde.py                                 # results/summary/mde.csv, limitation (v)
    uv run --with matplotlib==3.10.0 python scripts/make_figure1.py
    uv run --with matplotlib==3.10.0 python scripts/make_figures.py
    ```
    `make_case_study.py` recomputes validation metrics and needs the panel up to 2023.
+9. **Post-review experiments (training + validation only).** Pre-specified in [docs/review1_prespecification.md](docs/review1_prespecification.md); DeepSeek groups B, C, Cd (depth-compatible R1 advice), Cs (diagnosis statistics without instructions), and B, C with λ = 1.0, five runs each:
+   ```bash
+   uv run python scripts/run_mining.py llm --model deepseek --group Cd --seed 0 --review 1
+   uv run python scripts/run_mining.py llm --model deepseek --group B --lam 1 --seed 0 --review 1
+   uv run python scripts/build_final.py --review 1                      # results/review1/final/
+   uv run python scripts/analyze_review1.py                             # results/review1/summary/
+   ```
+   These runs write to `results/review1/` and `logs/llm/review1/`, apart from the main runs; the test lock stays on. `results/review1/jobs.txt` lists the 30 argument sets, run six at a time.
 
 Runs are unseeded at the API level, so re-running the LLM steps gives new runs, not our logs; the logs in `logs/llm/` are the record of the runs reported in the paper.
 
@@ -112,11 +122,12 @@ Runs are unseeded at the API level, so re-running the LLM steps gives new runs, 
 | `results/test/`, `results/test_sensitivity/` | the one-time test evaluation |
 | `results/summary/` | per-run and per-config tables (`tables.md`; `table2_main.csv` is Table 1 of the paper; full robustness and cost tables) |
 | `results/mechanism/` | failure-mechanism analysis of Section 6 (exploratory) and post hoc supplementary numbers |
+| `results/review1/` | post-review experiments (Section 7 of the paper): runs, final pools, `summary/tests.csv` (pre-specified contrasts), `summary/per_run.csv` and `summary/means.csv` (group means); LLM logs in `logs/llm/review1/` |
 | `results/probe/` | probe answers and per-month accuracy |
 | `results/figures/` | Figures 1–3; `fig2_convergence_correlations.*` and `fig3_test_periods.*` contain the panels referred to as "in the repository" (correlation of Group C factors with known factors; IC by market regime) |
 | `results/checks/` | data-check outputs |
 
-Run names: `<model>_<group>[_think]_s<seed>` for LLM runs, `gp<budget>_s<seed>` for GP.
+Run names: `<model>_<group>[_lam<λ>][_think]_s<seed>` for LLM runs, `gp<budget>_s<seed>` for GP.
 
 ## License
 

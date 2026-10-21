@@ -19,11 +19,13 @@ def config() -> dict:
 
 
 @lru_cache
-def evaluator() -> Evaluator:
+def evaluator(lam: float | None = None) -> Evaluator:
+    """`lam` overrides the frozen turnover penalty (review round 1, experiment E2 only)."""
     cfg = config()
     panel = load_panel()
     regimes = regime_labels(benchmark()["adj_close"], panel.dates)
-    return Evaluator(panel, industry_codes(panel.entities), regimes, cfg["lambda"], cfg["tau"])
+    return Evaluator(panel, industry_codes(panel.entities), regimes,
+                     cfg["lambda"] if lam is None else lam, cfg["tau"])
 
 
 def thresholds() -> Thresholds:

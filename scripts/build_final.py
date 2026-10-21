@@ -6,6 +6,9 @@ skipped. Existing outputs are kept unless --force.
 
   uv run python scripts/build_final.py              # all runs + Alpha101
   uv run python scripts/build_final.py gp200_s0 deepseek_C_s0
+  uv run python scripts/build_final.py --review 1   # review-round runs, no Alpha101
+
+Fitness fields always use the frozen lambda; P1 and the selection do not use fitness.
 """
 import argparse
 import json
@@ -20,12 +23,14 @@ from alpha_mining.config import ROOT, TRAIN, VALID
 from alpha_mining.context import config, evaluator
 from alpha_mining.dsl.evaluate import evaluate
 
-RUNS, OUT = ROOT / "results" / "runs", ROOT / "results" / "final"
 
 p = argparse.ArgumentParser()
 p.add_argument("runs", nargs="*")
 p.add_argument("--force", action="store_true")
+p.add_argument("--review", type=int, default=None, help="review round: results/review<N>/")
 args = p.parse_args()
+base = ROOT / "results" / (f"review{args.review}" if args.review else "")
+RUNS, OUT = base / "runs", base / "final"
 
 cfg = config()
 gates = json.loads((ROOT / cfg["pool_gate_file"]).read_text())
@@ -33,7 +38,7 @@ ev = evaluator()
 panel = ev.panel
 OUT.mkdir(parents=True, exist_ok=True)
 
-names = args.runs or ["alpha101"] + sorted(p.stem for p in RUNS.glob("*.jsonl") if "_pilot" not in p.stem)
+names = args.runs or ([] if args.review else ["alpha101"]) + sorted(p.stem for p in RUNS.glob("*.jsonl") if "_pilot" not in p.stem)
 
 
 def candidates(name: str):
