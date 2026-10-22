@@ -83,6 +83,7 @@ class ChatClient:
         self.temperature = temperature
         LOG_DIR.mkdir(parents=True, exist_ok=True)
         self.log_path = LOG_DIR / f"{log_name}.jsonl"
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
         self.served_model: str | None = None
 
     def chat(self, messages: list[dict], max_tokens: int | None = None, **log_meta) -> Reply:

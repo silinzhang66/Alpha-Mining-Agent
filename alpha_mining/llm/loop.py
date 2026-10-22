@@ -7,8 +7,9 @@ two best by training fitness so far plus the best new candidate of the previous
 round (the next one down if it is already among the top two).
 """
 from alpha_mining.llm.client import ChatClient
-from alpha_mining.llm.prompts import build_messages, diagnosis_block, feedback_block, parse_reply
-from alpha_mining.mining.diagnostics import Thresholds, diagnose
+from alpha_mining.llm.prompts import (DIAGNOSED, build_messages, diagnosis_block, feedback_block,
+                                      parse_reply, stats_block)
+from alpha_mining.mining.diagnostics import R1_ADVICE, R1_ADVICE_DEPTH, Thresholds, diagnose
 from alpha_mining.mining.session import Candidate, MiningSession
 
 PARSE_RETRIES = 2
@@ -28,7 +29,10 @@ def run_llm(session: MiningSession, client: ChatClient, group: str, rounds: int,
         failures = [{"formula": c.expr or "(missing)", "message": c.message}
                     for c in session.candidates if c.round == rnd - 1 and c.status != "ok"]
         feedback = feedback_block([c.feedback_numbers() for c in shown], failures, rnd, rounds)
-        diagnosis = diagnosis_block(diagnose(shown, thresholds)) if group == "C" else None
+        diagnosis = None
+        if group in DIAGNOSED:
+            diags = diagnose(shown, thresholds, R1_ADVICE_DEPTH if group == "Cd" else R1_ADVICE)
+            diagnosis = stats_block(diags) if group == "Cs" else diagnosis_block(diags)
         messages = build_messages(group, k, lam, tau, feedback, diagnosis)
 
         items, error = [], ""

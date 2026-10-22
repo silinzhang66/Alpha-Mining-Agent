@@ -133,9 +133,25 @@ def diagnosis_block(diagnoses: list) -> str:
     return "\n".join(lines)
 
 
+def stats_block(diagnoses: list) -> str:
+    """Review round 1, experiment E3 (group Cs): the statistics quoted by the
+    diagnoses, without rule names, interpretation or repair instructions."""
+    if not diagnoses:
+        return "ADDITIONAL STATISTICS\nNone for the expressions shown above."
+    lines = ["ADDITIONAL STATISTICS (training sample) for the expressions shown above"]
+    for d in diagnoses:
+        lines.append(f"* {d.formula}\n  {d.evidence}")
+    return "\n".join(lines)
+
+
+# Groups of review round 1: Cd = C with depth-compatible R1 advice (E1),
+# Cs = B plus the diagnoses' statistics without instructions (E3).
+DIAGNOSED = ("C", "Cd", "Cs")
+
+
 def build_messages(group: str, k: int, lam: float, tau: float, feedback: str,
                    diagnosis: str | None = None) -> list[dict]:
-    if group not in ("A", "B", "C"):
+    if group not in ("A", "B", *DIAGNOSED):
         raise ValueError(group)
     blind = group == "A"
     system = "\n\n".join([
@@ -146,8 +162,8 @@ def build_messages(group: str, k: int, lam: float, tau: float, feedback: str,
         (FORMAT_BLIND if blind else FORMAT_RESEARCH).format(k=k),
     ])
     user = feedback
-    if group == "C":
-        user += "\n\n" + (diagnosis or diagnosis_block([]))
+    if group in DIAGNOSED:
+        user += "\n\n" + (diagnosis or (stats_block([]) if group == "Cs" else diagnosis_block([])))
     user += f"\n\nPropose {k} new expressions now."
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
